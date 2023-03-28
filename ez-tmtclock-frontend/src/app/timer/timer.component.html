@@ -1,0 +1,39 @@
+<div class="container">
+    <h1>工作計時器</h1>
+    <div class="timer">
+      <div class="time">{{ remainingTime | minutesSeconds }}</div>
+      <div class="buttons">
+        <button (click)="startWork()">開始工作</button>
+        <button (click)="startBreak()">開始休息</button>
+        <button (click)="toggleTimer()">
+            {{ timerIsRunning ? '停止' : '繼續' }}
+        </button>
+      </div>
+    </div>
+    <div class="settings">
+      <h2>設定</h2>
+      <div>
+        <label>工作時間（分鐘）：</label>
+        <input type="number" [(ngModel)]="workTime" min="1" [disabled]="timerIsRunning">
+      </div>
+      <div>
+        <label>休息時間（分鐘）：</label>
+        <input type="number" [(ngModel)]="breakTime" min="1" [disabled]="timerIsRunning">
+      </div>
+    </div>
+    <div class="tasks">
+      <h2>任务列表</h2>
+      <ul>
+        <li *ngFor="let task of tasks"
+            [ngClass]="{'completed': task.completed}"
+            (click)="toggleTaskCompleted(task)">
+          <span>{{ task.title }}</span>
+          <span class="material-icons">{{ task.completed ? 'check_circle' : 'radio_button_unchecked' }}</span>
+        </li>
+      </ul>
+      <form (ngSubmit)="addTask(taskInput.value)">
+        <input type="text" #taskInput required>
+        <button type="submit">新增</button>
+      </form>
+    </div>
+</div>
